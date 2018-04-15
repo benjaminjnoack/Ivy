@@ -37,6 +37,7 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+#define SOPT2_CLKOUTSEL_FLEXBUS 0x00u  /*!<@brief CLKOUT select: FlexBus CLKOUT */
 #define SOPT5_UART0TXSRC_UART_TX 0x00u /*!<@brief UART 0 transmit data source select: UART0_TX pin */
 
 /*! @name PORTB16 (number 62), U7[4]/UART0_RX_TGTMCU
@@ -105,6 +106,17 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED_BLUE_NAME "LED_BLUE"                    /*!<@brief Identifier name */
 #define BOARD_INITPINS_LED_BLUE_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
                                                                    /* @} */
+
+/*! @name PORTC3 (number 73), J1[14]/LLWU_P7/CMP1_IN1
+  @{ */
+#define BOARD_INITPINS_CMP1_IN1_PERIPHERAL FB                   /*!<@brief Device name: FB */
+#define BOARD_INITPINS_CMP1_IN1_SIGNAL CLKOUT                   /*!<@brief FB signal: CLKOUT */
+#define BOARD_INITPINS_CMP1_IN1_PORT PORTC                      /*!<@brief PORT device name: PORTC */
+#define BOARD_INITPINS_CMP1_IN1_PIN 3U                          /*!<@brief PORTC pin index: 3 */
+#define BOARD_INITPINS_CMP1_IN1_PIN_NAME CLKOUT                 /*!<@brief Pin name */
+#define BOARD_INITPINS_CMP1_IN1_LABEL "J1[14]/LLWU_P7/CMP1_IN1" /*!<@brief Label */
+#define BOARD_INITPINS_CMP1_IN1_NAME "CMP1_IN1"                 /*!<@brief Identifier name */
+                                                                /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

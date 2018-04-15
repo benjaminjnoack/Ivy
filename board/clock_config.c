@@ -51,6 +51,7 @@ board: FRDM-KV31F
 #define MCG_PLL_DISABLE                                   0U  /*!< MCGPLLCLK disabled */
 #define OSC_CAP0P                                         0U  /*!< Oscillator 0pF capacitor load */
 #define OSC_ER_CLK_DISABLE                                0U  /*!< Disable external reference clock */
+#define SIM_CLKOUT_SEL_FLEXBUS_CLK                        0U  /*!< CLKOUT pin clock select: FlexBus clock */
 #define SIM_OSC32KSEL_LPO_CLK                             3U  /*!< OSC32KSEL select: LPO clock */
 #define SIM_PLLFLLSEL_IRC48MCLK_CLK                       3U  /*!< PLLFLL select: IRC48MCLK clock */
 #define SIM_PLLFLLSEL_MCGPLLCLK_CLK                       1U  /*!< PLLFLL select: MCGPLLCLK clock */
@@ -94,6 +95,7 @@ name: BOARD_BootClockHSRUN
 called_from_default_init: true
 outputs:
 - {id: Bus_clock.outFreq, value: 60 MHz}
+- {id: CLKOUT.outFreq, value: 30 MHz}
 - {id: Core_clock.outFreq, value: 120 MHz, locked: true, accuracy: '0.001'}
 - {id: ERCLK32K.outFreq, value: 1 kHz}
 - {id: Flash_clock.outFreq, value: 24 MHz}
@@ -108,6 +110,7 @@ outputs:
 settings:
 - {id: MCGMode, value: PEE}
 - {id: powerMode, value: HSRUN}
+- {id: CLKOUTConfig, value: 'yes'}
 - {id: MCG.FCRDIV.scale, value: '1'}
 - {id: MCG.FRDIV.scale, value: '32'}
 - {id: MCG.IREFS.sel, value: MCG.FRDIV}
@@ -123,7 +126,7 @@ settings:
 - {id: SIM.LPUARTSRCSEL.sel, value: OSC.OSCERCLK}
 - {id: SIM.OSC32KSEL.sel, value: PMC.LPOCLK}
 - {id: SIM.OUTDIV2.scale, value: '2'}
-- {id: SIM.OUTDIV3.scale, value: '4'}
+- {id: SIM.OUTDIV3.scale, value: '4', locked: true}
 - {id: SIM.OUTDIV4.scale, value: '5'}
 - {id: SIM.PLLFLLSEL.sel, value: MCG.MCGPLLCLK}
 sources:
@@ -199,6 +202,8 @@ void BOARD_BootClockHSRUN(void)
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockHSRUN);
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKHSRUN_CORE_CLOCK;
+    /* Set CLKOUT source. */
+    CLOCK_SetClkOutClock(SIM_CLKOUT_SEL_FLEXBUS_CLK);
 }
 
 /*******************************************************************************
