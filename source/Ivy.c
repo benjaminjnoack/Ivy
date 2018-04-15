@@ -54,6 +54,8 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
+    printf("Hello World");
+
     for (;;)
     	__asm("NOP");
 
