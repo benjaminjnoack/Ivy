@@ -62,51 +62,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_DEBUG_UART_TX_NAME "DEBUG_UART_TX"           /*!<@brief Identifier name */
                                                                     /* @} */
 
-/*! @name PORTD1 (number 94), D4[1]/LEDRGB_RED
-  @{ */
-#define BOARD_INITPINS_LED_RED_PERIPHERAL GPIOD                   /*!<@brief Device name: GPIOD */
-#define BOARD_INITPINS_LED_RED_SIGNAL GPIO                        /*!<@brief GPIOD signal: GPIO */
-#define BOARD_INITPINS_LED_RED_GPIO GPIOD                         /*!<@brief GPIO device name: GPIOD */
-#define BOARD_INITPINS_LED_RED_GPIO_PIN 1U                        /*!<@brief PORTD pin index: 1 */
-#define BOARD_INITPINS_LED_RED_PORT PORTD                         /*!<@brief PORT device name: PORTD */
-#define BOARD_INITPINS_LED_RED_PIN 1U                             /*!<@brief PORTD pin index: 1 */
-#define BOARD_INITPINS_LED_RED_CHANNEL 1                          /*!<@brief GPIOD GPIO channel: 1 */
-#define BOARD_INITPINS_LED_RED_PIN_NAME PTD1                      /*!<@brief Pin name */
-#define BOARD_INITPINS_LED_RED_LABEL "D4[1]/LEDRGB_RED"           /*!<@brief Label */
-#define BOARD_INITPINS_LED_RED_NAME "LED_RED"                     /*!<@brief Identifier name */
-#define BOARD_INITPINS_LED_RED_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
-                                                                  /* @} */
-
-/*! @name PORTD7 (number 100), D4[4]/LEDRGB_GREEN
-  @{ */
-#define BOARD_INITPINS_LED_GREEN_PERIPHERAL GPIOD                   /*!<@brief Device name: GPIOD */
-#define BOARD_INITPINS_LED_GREEN_SIGNAL GPIO                        /*!<@brief GPIOD signal: GPIO */
-#define BOARD_INITPINS_LED_GREEN_GPIO GPIOD                         /*!<@brief GPIO device name: GPIOD */
-#define BOARD_INITPINS_LED_GREEN_GPIO_PIN 7U                        /*!<@brief PORTD pin index: 7 */
-#define BOARD_INITPINS_LED_GREEN_PORT PORTD                         /*!<@brief PORT device name: PORTD */
-#define BOARD_INITPINS_LED_GREEN_PIN 7U                             /*!<@brief PORTD pin index: 7 */
-#define BOARD_INITPINS_LED_GREEN_CHANNEL 7                          /*!<@brief GPIOD GPIO channel: 7 */
-#define BOARD_INITPINS_LED_GREEN_PIN_NAME PTD7                      /*!<@brief Pin name */
-#define BOARD_INITPINS_LED_GREEN_LABEL "D4[4]/LEDRGB_GREEN"         /*!<@brief Label */
-#define BOARD_INITPINS_LED_GREEN_NAME "LED_GREEN"                   /*!<@brief Identifier name */
-#define BOARD_INITPINS_LED_GREEN_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
-                                                                    /* @} */
-
-/*! @name PORTE25 (number 32), D4[3]/LEDRGB_BLUE
-  @{ */
-#define BOARD_INITPINS_LED_BLUE_PERIPHERAL GPIOE                   /*!<@brief Device name: GPIOE */
-#define BOARD_INITPINS_LED_BLUE_SIGNAL GPIO                        /*!<@brief GPIOE signal: GPIO */
-#define BOARD_INITPINS_LED_BLUE_GPIO GPIOE                         /*!<@brief GPIO device name: GPIOE */
-#define BOARD_INITPINS_LED_BLUE_GPIO_PIN 25U                       /*!<@brief PORTE pin index: 25 */
-#define BOARD_INITPINS_LED_BLUE_PORT PORTE                         /*!<@brief PORT device name: PORTE */
-#define BOARD_INITPINS_LED_BLUE_PIN 25U                            /*!<@brief PORTE pin index: 25 */
-#define BOARD_INITPINS_LED_BLUE_CHANNEL 25                         /*!<@brief GPIOE GPIO channel: 25 */
-#define BOARD_INITPINS_LED_BLUE_PIN_NAME PTE25                     /*!<@brief Pin name */
-#define BOARD_INITPINS_LED_BLUE_LABEL "D4[3]/LEDRGB_BLUE"          /*!<@brief Label */
-#define BOARD_INITPINS_LED_BLUE_NAME "LED_BLUE"                    /*!<@brief Identifier name */
-#define BOARD_INITPINS_LED_BLUE_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
-                                                                   /* @} */
-
 /*! @name PORTC3 (number 73), J1[14]/LLWU_P7/CMP1_IN1
   @{ */
 #define BOARD_INITPINS_CMP1_IN1_PERIPHERAL FB                   /*!<@brief Device name: FB */
@@ -117,6 +72,45 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_CMP1_IN1_LABEL "J1[14]/LLWU_P7/CMP1_IN1" /*!<@brief Label */
 #define BOARD_INITPINS_CMP1_IN1_NAME "CMP1_IN1"                 /*!<@brief Identifier name */
                                                                 /* @} */
+
+/*! @name PORTD1 (number 94), D4[1]/LEDRGB_RED
+  @{ */
+#define BOARD_INITPINS_LED_RED_PERIPHERAL FTM3                    /*!<@brief Device name: FTM3 */
+#define BOARD_INITPINS_LED_RED_SIGNAL CH                          /*!<@brief FTM3 signal: CH */
+#define BOARD_INITPINS_LED_RED_PORT PORTD                         /*!<@brief PORT device name: PORTD */
+#define BOARD_INITPINS_LED_RED_PIN 1U                             /*!<@brief PORTD pin index: 1 */
+#define BOARD_INITPINS_LED_RED_CHANNEL 1                          /*!<@brief FTM3 channel: 1 */
+#define BOARD_INITPINS_LED_RED_PIN_NAME FTM3_CH1                  /*!<@brief Pin name */
+#define BOARD_INITPINS_LED_RED_LABEL "D4[1]/LEDRGB_RED"           /*!<@brief Label */
+#define BOARD_INITPINS_LED_RED_NAME "LED_RED"                     /*!<@brief Identifier name */
+#define BOARD_INITPINS_LED_RED_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
+                                                                  /* @} */
+
+/*! @name PORTE25 (number 32), D4[3]/LEDRGB_BLUE
+  @{ */
+#define BOARD_INITPINS_LED_BLUE_PERIPHERAL FTM0                    /*!<@brief Device name: FTM0 */
+#define BOARD_INITPINS_LED_BLUE_SIGNAL CH                          /*!<@brief FTM0 signal: CH */
+#define BOARD_INITPINS_LED_BLUE_PORT PORTE                         /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_LED_BLUE_PIN 25U                            /*!<@brief PORTE pin index: 25 */
+#define BOARD_INITPINS_LED_BLUE_CHANNEL 1                          /*!<@brief FTM0 channel: 1 */
+#define BOARD_INITPINS_LED_BLUE_PIN_NAME FTM0_CH1                  /*!<@brief Pin name */
+#define BOARD_INITPINS_LED_BLUE_LABEL "D4[3]/LEDRGB_BLUE"          /*!<@brief Label */
+#define BOARD_INITPINS_LED_BLUE_NAME "LED_BLUE"                    /*!<@brief Identifier name */
+#define BOARD_INITPINS_LED_BLUE_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
+                                                                   /* @} */
+
+/*! @name PORTD7 (number 100), D4[4]/LEDRGB_GREEN
+  @{ */
+#define BOARD_INITPINS_LED_GREEN_PERIPHERAL FTM0                    /*!<@brief Device name: FTM0 */
+#define BOARD_INITPINS_LED_GREEN_SIGNAL CH                          /*!<@brief FTM0 signal: CH */
+#define BOARD_INITPINS_LED_GREEN_PORT PORTD                         /*!<@brief PORT device name: PORTD */
+#define BOARD_INITPINS_LED_GREEN_PIN 7U                             /*!<@brief PORTD pin index: 7 */
+#define BOARD_INITPINS_LED_GREEN_CHANNEL 7                          /*!<@brief FTM0 channel: 7 */
+#define BOARD_INITPINS_LED_GREEN_PIN_NAME FTM0_CH7                  /*!<@brief Pin name */
+#define BOARD_INITPINS_LED_GREEN_LABEL "D4[4]/LEDRGB_GREEN"         /*!<@brief Label */
+#define BOARD_INITPINS_LED_GREEN_NAME "LED_GREEN"                   /*!<@brief Identifier name */
+#define BOARD_INITPINS_LED_GREEN_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
+                                                                    /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

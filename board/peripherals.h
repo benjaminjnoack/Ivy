@@ -10,8 +10,8 @@
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
-#include "fsl_gpio.h"
-#include "fsl_port.h"
+#include "fsl_clock.h"
+#include "fsl_ftm.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -21,16 +21,28 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
-/* Alias for GPIOD peripheral */
-#define GPIO_1_GPIO GPIOD
-/* Alias for GPIOE peripheral */
-#define GPIO_2_GPIO GPIOE
+/* Definition of peripheral ID */
+#define FTM_1_PERIPHERAL FTM0
+/* Definition of the clock source frequency */
+#define FTM_1_CLOCK_SOURCE CLOCK_GetFreq(kCLOCK_BusClk)
+/* FTM_1 interrupt vector ID (number). */
+#define FTM_1_IRQN FTM0_IRQn
+/* FTM_1 interrupt handler identifier. */
+#define FTM_1_IRQHANDLER FTM0_IRQHandler
+/* Definition of peripheral ID */
+#define FTM_2_PERIPHERAL FTM3
+/* Definition of the clock source frequency */
+#define FTM_2_CLOCK_SOURCE CLOCK_GetFreq(kCLOCK_BusClk)
+/* FTM_2 interrupt vector ID (number). */
+#define FTM_2_IRQN FTM3_IRQn
+/* FTM_2 interrupt handler identifier. */
+#define FTM_2_IRQHANDLER FTM3_IRQHandler
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern gpio_pin_config_t GPIO_1_config[2];
-extern gpio_pin_config_t GPIO_2_config[1];
+extern const ftm_config_t FTM_1_config;
+extern const ftm_config_t FTM_2_config;
 
 /***********************************************************************************************************************
  * Initialization functions

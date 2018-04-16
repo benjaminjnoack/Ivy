@@ -35,94 +35,169 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
- * GPIO_1 initialization code
+ * FTM_1 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'GPIO_1'
-- type: 'gpio'
-- mode: 'GPIO'
-- type_id: 'gpio_f970a92e447fa4793838db25a2947ed7'
+- name: 'FTM_1'
+- type: 'ftm'
+- mode: 'EdgeAligned'
+- type_id: 'ftm_5e037045c21cf6f361184c371dbbbab2'
 - functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'GPIOD'
+- peripheral: 'FTM0'
 - config_sets:
-  - fsl_gpio:
+  - ftm_main_config:
+    - ftm_config:
+      - clockSource: 'kFTM_SystemClock'
+      - prescale: 'kFTM_Prescale_Divide_1'
+      - timerFrequency: '10000'
+      - bdmMode: 'kFTM_BdmMode_0'
+      - pwmSyncMode: 'kFTM_SoftwareTrigger'
+      - reloadPoints: ''
+      - faultMode: 'kFTM_Fault_Disable'
+      - faultFilterValue: '0'
+      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
+      - deadTimeValue: '0'
+      - extTriggers: ''
+      - chnlInitState: ''
+      - chnlPolarity: ''
+      - useGlobalTimeBase: 'false'
+    - timer_interrupts: ''
     - enable_irq: 'false'
-    - port_interrupt:
-      - IRQn: 'PORTD_IRQn'
+    - ftm_interrupt:
+      - IRQn: 'FTM0_IRQn'
       - enable_priority: 'false'
       - enable_custom_name: 'false'
-    - gpio_config:
+    - EnableTimerInInit: 'true'
+    - quick_selection: 'QuickSelectionDefault'
+  - ftm_edge_aligned_mode:
+    - ftm_edge_aligned_channels_config:
       - 0:
-        - signal_number: 'GPIO.1'
-        - pinDirection: 'kGPIO_DigitalOutput'
-        - interrupt_configuration: 'kPORT_InterruptOrDMADisabled'
-        - outputLogic: '0U'
+        - edge_aligned_mode: 'kFTM_EdgeAlignedPwm'
+        - edge_aligned_pwm:
+          - chnlNumber: 'kFTM_Chnl_1'
+          - level: 'kFTM_LowTrue'
+          - dutyCyclePercent: '0'
+          - enable_chan_irq: 'false'
       - 1:
-        - signal_number: 'GPIO.7'
-        - pinDirection: 'kGPIO_DigitalOutput'
-        - interrupt_configuration: 'kPORT_InterruptOrDMADisabled'
-        - outputLogic: '0U'
+        - edge_aligned_mode: 'kFTM_EdgeAlignedPwm'
+        - edge_aligned_pwm:
+          - chnlNumber: 'kFTM_Chnl_7'
+          - level: 'kFTM_LowTrue'
+          - dutyCyclePercent: '0'
+          - enable_chan_irq: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-gpio_pin_config_t GPIO_1_config[2] = {
+const ftm_config_t FTM_1_config = {
+  .prescale = kFTM_Prescale_Divide_1,
+  .bdmMode = kFTM_BdmMode_0,
+  .pwmSyncMode = kFTM_SoftwareTrigger,
+  .reloadPoints = 0,
+  .faultMode = kFTM_Fault_Disable,
+  .faultFilterValue = 0,
+  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
+  .deadTimeValue = 0,
+  .extTriggers = 0,
+  .chnlInitState = 0,
+  .chnlPolarity = 0,
+  .useGlobalTimeBase = false
+};
+
+const ftm_chnl_pwm_signal_param_t FTM_1_pwmSignalParams[] = { 
   {
-    .pinDirection = kGPIO_DigitalOutput,
-    .outputLogic = 0U
+    .chnlNumber = kFTM_Chnl_1,
+    .level = kFTM_LowTrue,
+    .dutyCyclePercent = 0
   },
   {
-    .pinDirection = kGPIO_DigitalOutput,
-    .outputLogic = 0U
+    .chnlNumber = kFTM_Chnl_7,
+    .level = kFTM_LowTrue,
+    .dutyCyclePercent = 0
   }
 };
 
-void GPIO_1_init(void) {
-  /* Make sure, the clock gate for port D is enabled (e. g. in pin_mux.c) */
-  /* Initialize GPIO functionality on pin PTD1 */
-  GPIO_PinInit(GPIO_1_GPIO, 1U, &GPIO_1_config[0]);
-  /* Initialize GPIO functionality on pin PTD7 */
-  GPIO_PinInit(GPIO_1_GPIO, 7U, &GPIO_1_config[1]);
+void FTM_1_init(void) {
+  FTM_Init(FTM_1_PERIPHERAL, &FTM_1_config);
+  FTM_SetupPwm(FTM_1_PERIPHERAL, FTM_1_pwmSignalParams, sizeof(FTM_1_pwmSignalParams) / sizeof(ftm_chnl_pwm_signal_param_t), kFTM_EdgeAlignedPwm, 10000U, FTM_1_CLOCK_SOURCE);
+  FTM_StartTimer(FTM_1_PERIPHERAL, kFTM_SystemClock);
 }
 
 /***********************************************************************************************************************
- * GPIO_2 initialization code
+ * FTM_2 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 instance:
-- name: 'GPIO_2'
-- type: 'gpio'
-- mode: 'GPIO'
-- type_id: 'gpio_f970a92e447fa4793838db25a2947ed7'
+- name: 'FTM_2'
+- type: 'ftm'
+- mode: 'EdgeAligned'
+- type_id: 'ftm_5e037045c21cf6f361184c371dbbbab2'
 - functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'GPIOE'
+- peripheral: 'FTM3'
 - config_sets:
-  - fsl_gpio:
+  - ftm_main_config:
+    - ftm_config:
+      - clockSource: 'kFTM_SystemClock'
+      - prescale: 'kFTM_Prescale_Divide_1'
+      - timerFrequency: '10000'
+      - bdmMode: 'kFTM_BdmMode_0'
+      - pwmSyncMode: 'kFTM_SoftwareTrigger'
+      - reloadPoints: ''
+      - faultMode: 'kFTM_Fault_Disable'
+      - faultFilterValue: '0'
+      - deadTimePrescale: 'kFTM_Deadtime_Prescale_1'
+      - deadTimeValue: '0'
+      - extTriggers: ''
+      - chnlInitState: ''
+      - chnlPolarity: ''
+      - useGlobalTimeBase: 'false'
+    - timer_interrupts: ''
     - enable_irq: 'false'
-    - port_interrupt:
-      - IRQn: 'PORTE_IRQn'
+    - ftm_interrupt:
+      - IRQn: 'FTM3_IRQn'
       - enable_priority: 'false'
       - enable_custom_name: 'false'
-    - gpio_config:
+    - EnableTimerInInit: 'true'
+    - quick_selection: 'QuickSelectionDefault'
+  - ftm_edge_aligned_mode:
+    - ftm_edge_aligned_channels_config:
       - 0:
-        - signal_number: 'GPIO.25'
-        - pinDirection: 'kGPIO_DigitalOutput'
-        - interrupt_configuration: 'kPORT_InterruptOrDMADisabled'
-        - outputLogic: '0U'
+        - edge_aligned_mode: 'kFTM_EdgeAlignedPwm'
+        - edge_aligned_pwm:
+          - chnlNumber: 'kFTM_Chnl_1'
+          - level: 'kFTM_LowTrue'
+          - dutyCyclePercent: '70'
+          - enable_chan_irq: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
-gpio_pin_config_t GPIO_2_config[1] = {
+const ftm_config_t FTM_2_config = {
+  .prescale = kFTM_Prescale_Divide_1,
+  .bdmMode = kFTM_BdmMode_0,
+  .pwmSyncMode = kFTM_SoftwareTrigger,
+  .reloadPoints = 0,
+  .faultMode = kFTM_Fault_Disable,
+  .faultFilterValue = 0,
+  .deadTimePrescale = kFTM_Deadtime_Prescale_1,
+  .deadTimeValue = 0,
+  .extTriggers = 0,
+  .chnlInitState = 0,
+  .chnlPolarity = 0,
+  .useGlobalTimeBase = false
+};
+
+const ftm_chnl_pwm_signal_param_t FTM_2_pwmSignalParams[] = { 
   {
-    .pinDirection = kGPIO_DigitalOutput,
-    .outputLogic = 0U
+    .chnlNumber = kFTM_Chnl_1,
+    .level = kFTM_LowTrue,
+    .dutyCyclePercent = 70
   }
 };
 
-void GPIO_2_init(void) {
-  /* Make sure, the clock gate for port E is enabled (e. g. in pin_mux.c) */
-  /* Initialize GPIO functionality on pin PTE25 */
-  GPIO_PinInit(GPIO_2_GPIO, 25U, &GPIO_2_config[0]);
+void FTM_2_init(void) {
+  FTM_Init(FTM_2_PERIPHERAL, &FTM_2_config);
+  FTM_SetupPwm(FTM_2_PERIPHERAL, FTM_2_pwmSignalParams, sizeof(FTM_2_pwmSignalParams) / sizeof(ftm_chnl_pwm_signal_param_t), kFTM_EdgeAlignedPwm, 10000U, FTM_2_CLOCK_SOURCE);
+  FTM_StartTimer(FTM_2_PERIPHERAL, kFTM_SystemClock);
 }
 
 /***********************************************************************************************************************
@@ -131,8 +206,8 @@ void GPIO_2_init(void) {
 void BOARD_InitPeripherals(void)
 {
   /* Initialize components */
-  GPIO_1_init();
-  GPIO_2_init();
+  FTM_1_init();
+  FTM_2_init();
 }
 
 /***********************************************************************************************************************
