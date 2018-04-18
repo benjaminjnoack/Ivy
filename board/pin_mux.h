@@ -39,6 +39,7 @@ void BOARD_InitBootPins(void);
 
 #define SOPT2_CLKOUTSEL_FLEXBUS 0x00u  /*!<@brief CLKOUT select: FlexBus CLKOUT */
 #define SOPT5_UART0TXSRC_UART_TX 0x00u /*!<@brief UART 0 transmit data source select: UART0_TX pin */
+#define SOPT5_UART1TXSRC_UART_TX 0x00u /*!<@brief UART 1 transmit data source select: UART1_TX pin */
 
 /*! @name PORTB16 (number 62), U7[4]/UART0_RX_TGTMCU
   @{ */
@@ -111,6 +112,28 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED_GREEN_NAME "LED_GREEN"                   /*!<@brief Identifier name */
 #define BOARD_INITPINS_LED_GREEN_DIRECTION kPIN_MUX_DirectionOutput /*!<@brief Direction */
                                                                     /* @} */
+
+/*! @name PORTE0 (number 1), J1[4]/UART1_TX
+  @{ */
+#define BOARD_INITPINS_UART1_TX_PERIPHERAL UART1       /*!<@brief Device name: UART1 */
+#define BOARD_INITPINS_UART1_TX_SIGNAL TX              /*!<@brief UART1 signal: TX */
+#define BOARD_INITPINS_UART1_TX_PORT PORTE             /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_UART1_TX_PIN 0U                 /*!<@brief PORTE pin index: 0 */
+#define BOARD_INITPINS_UART1_TX_PIN_NAME UART1_TX      /*!<@brief Pin name */
+#define BOARD_INITPINS_UART1_TX_LABEL "J1[4]/UART1_TX" /*!<@brief Label */
+#define BOARD_INITPINS_UART1_TX_NAME "UART1_TX"        /*!<@brief Identifier name */
+                                                       /* @} */
+
+/*! @name PORTE1 (number 2), J1[2]/UART1_RX/SPI1_SOUT
+  @{ */
+#define BOARD_INITPINS_UART1_RX_PERIPHERAL UART1                 /*!<@brief Device name: UART1 */
+#define BOARD_INITPINS_UART1_RX_SIGNAL RX                        /*!<@brief UART1 signal: RX */
+#define BOARD_INITPINS_UART1_RX_PORT PORTE                       /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_UART1_RX_PIN 1U                           /*!<@brief PORTE pin index: 1 */
+#define BOARD_INITPINS_UART1_RX_PIN_NAME UART1_RX                /*!<@brief Pin name */
+#define BOARD_INITPINS_UART1_RX_LABEL "J1[2]/UART1_RX/SPI1_SOUT" /*!<@brief Label */
+#define BOARD_INITPINS_UART1_RX_NAME "UART1_RX"                  /*!<@brief Identifier name */
+                                                                 /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

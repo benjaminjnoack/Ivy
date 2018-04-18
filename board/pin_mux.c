@@ -44,6 +44,8 @@ BOARD_InitPins:
   - {pin_num: '94', peripheral: FTM3, signal: 'CH, 1', pin_signal: ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b/LPUART0_CTS_b, direction: OUTPUT}
   - {pin_num: '32', peripheral: FTM0, signal: 'CH, 1', pin_signal: ADC0_SE18/PTE25/FTM0_CH1/I2C0_SDA/EWM_IN, direction: OUTPUT}
   - {pin_num: '100', peripheral: FTM0, signal: 'CH, 7', pin_signal: PTD7/UART0_TX/FTM0_CH7/FTM0_FLT1/SPI1_SIN, direction: OUTPUT}
+  - {pin_num: '1', peripheral: UART1, signal: TX, pin_signal: ADC1_SE4a/PTE0/CLKOUT32K/SPI1_PCS1/UART1_TX/I2C1_SDA}
+  - {pin_num: '2', peripheral: UART1, signal: RX, pin_signal: ADC1_SE5a/PTE1/LLWU_P0/SPI1_SOUT/UART1_RX/I2C1_SCL/SPI1_SIN}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -80,6 +82,12 @@ void BOARD_InitPins(void)
     /* PORTD7 (pin 100) is configured as FTM0_CH7 */
     PORT_SetPinMux(BOARD_INITPINS_LED_GREEN_PORT, BOARD_INITPINS_LED_GREEN_PIN, kPORT_MuxAlt4);
 
+    /* PORTE0 (pin 1) is configured as UART1_TX */
+    PORT_SetPinMux(BOARD_INITPINS_UART1_TX_PORT, BOARD_INITPINS_UART1_TX_PIN, kPORT_MuxAlt3);
+
+    /* PORTE1 (pin 2) is configured as UART1_RX */
+    PORT_SetPinMux(BOARD_INITPINS_UART1_RX_PORT, BOARD_INITPINS_UART1_RX_PIN, kPORT_MuxAlt3);
+
     /* PORTE25 (pin 32) is configured as FTM0_CH1 */
     PORT_SetPinMux(BOARD_INITPINS_LED_BLUE_PORT, BOARD_INITPINS_LED_BLUE_PIN, kPORT_MuxAlt3);
 
@@ -92,10 +100,13 @@ void BOARD_InitPins(void)
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */
-                   (~(SIM_SOPT5_UART0TXSRC_MASK)))
+                   (~(SIM_SOPT5_UART0TXSRC_MASK | SIM_SOPT5_UART1TXSRC_MASK)))
 
                   /* UART 0 transmit data source select: UART0_TX pin. */
-                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX));
+                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX)
+
+                  /* UART 1 transmit data source select: UART1_TX pin. */
+                  | SIM_SOPT5_UART1TXSRC(SOPT5_UART1TXSRC_UART_TX));
 }
 /***********************************************************************************************************************
  * EOF

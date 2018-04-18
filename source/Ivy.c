@@ -38,26 +38,24 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MKV31F51212.h"
-/* TODO: insert other include files here. */
-
-/* TODO: insert other definitions and declarations here. */
-
+#include "uart.h"
+#include "FreeRTOS.h"
+#include "task.h"
 /*
  * @brief   Application entry point.
  */
 int main(void) {
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
+	BOARD_InitDebugConsole();
+	uartInitialize();
+	printf("Hello World");
 
-  	/* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
-  	/* Init FSL debug console. */
-    BOARD_InitDebugConsole();
+	vTaskStartScheduler();
 
-    printf("Hello World");
+	for (;;)
+		__asm("NOP");
 
-    for (;;)
-    	__asm("NOP");
-
-    return 0 ;
+	return 0 ;
 }
