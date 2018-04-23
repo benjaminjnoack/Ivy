@@ -7,40 +7,77 @@
 
 #include "uart.h"
 
-uint8_t rxBuffer[UART_BUF_SIZE];
-uint8_t txBuffer[UART_BUF_SIZE];
-struct _uart_handle uartHandle;
-uart_rtos_handle_t uartRtosHandle;
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+xTaskHandle xUartRxTask;
+uart_handle_t g_uartHandle;
+SemaphoreHandle_t xUartTxSemphr;
+uart_transfer_t rxTransfer;
+uint8_t rxBuffer[UART_BUFFER_LEN] = {0x00};
+volatile bool rxOnGoing = false;
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
 
 void uartRxTask(void *pvParameters);
 
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
 void uartInitialize(void) {
-	uart_rtos_config_t uartRtosConfig = {
-			.base = UART1,
-			.srcclk = CLOCK_GetFreq(kCLOCK_CoreSysClk),
-			.baudrate = 9600U,
-			.parity = kUART_ParityDisabled,
-			.stopbits = kUART_OneStopBit,
-			.buffer = txBuffer,
-			.buffer_size = UART_BUF_SIZE
-	};
+	status_t status;
+	uart_config_t config;
 
-	NVIC_SetPriority(UART1_RX_TX_IRQn, 4);
+	UART_GetDefaultConfig(&config);
+	config.enableRx = true;
+	config.enableTx = true;
+	//TODO enable CTS and RTS
+	status = UART_Init(UART1, &config, CLOCK_GetFreq(kCLOCK_CoreSysClk));
 
-	//TODO check success
-	UART_RTOS_Init(&uartRtosHandle, &uartHandle, &uartRtosConfig);
+	rxTransfer.data = rxBuffer;
+	rxTransfer.dataSize = UART_BUFFER_LEN;
 
-	xTaskCreate(uartRxTask, "UART RX", configMINIMAL_STACK_SIZE + 120, NULL, configMAX_PRIORITIES + 1, NULL);
+	NVIC_SetPriority(UART1_RX_TX_IRQn, 5);
+//	UART_EnableInterrupts(UART1, kUART_RxDataRegFullInterruptEnable);
+
+	UART_TransferCreateHandle(UART1, &g_uartHandle, UART_UserCallback, NULL);
+
+	xUartTxSemphr = xSemaphoreCreateBinary();
+//TODO stack size?
+	if (xTaskCreate(uartRxTask, "UART RX", configMINIMAL_STACK_SIZE + 128, NULL, (configMAX_PRIORITIES + 1), &xUartRxTask) != pdPASS)
+	{
+		PRINTF("UART RX creation failed!.\r\n");
+		while (1)
+			;
+	}
 }
 
 void uartRxTask(void *pvParameters) {
-	static int error;
-	size_t n;
+	static status_t rxStatus;
 
-	do {
-		error = UART_RTOS_Receive(&uartRtosHandle, rxBuffer, UART_BUF_SIZE, &n);
-		if (n > 0) {
-			printf("Received %s\n", rxBuffer);
+	for (;;) {
+		rxStatus = UART_TransferReceiveNonBlocking(UART1, &g_uartHandle, &rxTransfer, NULL);
+//		xSemaphoreTake(xUartTxSemphr, portMAX_DELAY);
+
+		if (!rxOnGoing) {
+			PRINTF("%s\r\n", rxTransfer.data);
+			rxOnGoing = true;
 		}
-	} while (kStatus_Success == error);
+	}
+
+	vTaskDelete(xUartRxTask);
+}
+
+void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData) {
+	static BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+	if (kStatus_UART_RxIdle == status) {
+		rxOnGoing = false;
+	} else {
+		PRINTF("STAT: %d\n\n", status);
+	}
 }

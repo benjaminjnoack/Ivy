@@ -11,11 +11,19 @@
 #include <stdio.h>
 #include "FreeRTOS.h"
 #include "task.h"
-#include "fsl_uart.h"
-#include "fsl_uart_freertos.h"
+#include "semphr.h"
 
-#define UART_BUF_SIZE 0x02
+#include "fsl_clock.h"
+#include "fsl_uart.h"
+#include "fsl_debug_console.h"
+
+#define UART_BUFFER_LEN 2
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
 
 void uartInitialize(void);
+void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData);
 
 #endif /* UART_H_ */

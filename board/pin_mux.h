@@ -135,6 +135,28 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_UART1_RX_NAME "UART1_RX"                  /*!<@brief Identifier name */
                                                                  /* @} */
 
+/*! @name PORTE2 (number 3), J1[11]/LLWU_P1/ADC1_SE6a
+  @{ */
+#define BOARD_INITPINS_ADC1_SE6a_PERIPHERAL UART1                 /*!<@brief Device name: UART1 */
+#define BOARD_INITPINS_ADC1_SE6a_SIGNAL CTS                       /*!<@brief UART1 signal: CTS */
+#define BOARD_INITPINS_ADC1_SE6a_PORT PORTE                       /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_ADC1_SE6a_PIN 2U                           /*!<@brief PORTE pin index: 2 */
+#define BOARD_INITPINS_ADC1_SE6a_PIN_NAME UART1_CTS_b             /*!<@brief Pin name */
+#define BOARD_INITPINS_ADC1_SE6a_LABEL "J1[11]/LLWU_P1/ADC1_SE6a" /*!<@brief Label */
+#define BOARD_INITPINS_ADC1_SE6a_NAME "ADC1_SE6a"                 /*!<@brief Identifier name */
+                                                                  /* @} */
+
+/*! @name PORTE3 (number 4), J1[13]/ADC1_SE7a
+  @{ */
+#define BOARD_INITPINS_ADC1_SE7a_PERIPHERAL UART1         /*!<@brief Device name: UART1 */
+#define BOARD_INITPINS_ADC1_SE7a_SIGNAL RTS               /*!<@brief UART1 signal: RTS */
+#define BOARD_INITPINS_ADC1_SE7a_PORT PORTE               /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_ADC1_SE7a_PIN 3U                   /*!<@brief PORTE pin index: 3 */
+#define BOARD_INITPINS_ADC1_SE7a_PIN_NAME UART1_RTS_b     /*!<@brief Pin name */
+#define BOARD_INITPINS_ADC1_SE7a_LABEL "J1[13]/ADC1_SE7a" /*!<@brief Label */
+#define BOARD_INITPINS_ADC1_SE7a_NAME "ADC1_SE7a"         /*!<@brief Identifier name */
+                                                          /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

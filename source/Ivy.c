@@ -50,7 +50,7 @@ int main(void) {
 	BOARD_InitBootPeripherals();
 	BOARD_InitDebugConsole();
 	uartInitialize();
-	printf("Hello World");
+	printf("Hello World\r\n");
 
 	vTaskStartScheduler();
 

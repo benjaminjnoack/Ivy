@@ -46,6 +46,8 @@ BOARD_InitPins:
   - {pin_num: '100', peripheral: FTM0, signal: 'CH, 7', pin_signal: PTD7/UART0_TX/FTM0_CH7/FTM0_FLT1/SPI1_SIN, direction: OUTPUT}
   - {pin_num: '1', peripheral: UART1, signal: TX, pin_signal: ADC1_SE4a/PTE0/CLKOUT32K/SPI1_PCS1/UART1_TX/I2C1_SDA}
   - {pin_num: '2', peripheral: UART1, signal: RX, pin_signal: ADC1_SE5a/PTE1/LLWU_P0/SPI1_SOUT/UART1_RX/I2C1_SCL/SPI1_SIN}
+  - {pin_num: '3', peripheral: UART1, signal: CTS, pin_signal: ADC1_SE6a/PTE2/LLWU_P1/SPI1_SCK/UART1_CTS_b}
+  - {pin_num: '4', peripheral: UART1, signal: RTS, pin_signal: ADC1_SE7a/PTE3/SPI1_SIN/UART1_RTS_b/SPI1_SOUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -88,8 +90,14 @@ void BOARD_InitPins(void)
     /* PORTE1 (pin 2) is configured as UART1_RX */
     PORT_SetPinMux(BOARD_INITPINS_UART1_RX_PORT, BOARD_INITPINS_UART1_RX_PIN, kPORT_MuxAlt3);
 
+    /* PORTE2 (pin 3) is configured as UART1_CTS_b */
+    PORT_SetPinMux(BOARD_INITPINS_ADC1_SE6a_PORT, BOARD_INITPINS_ADC1_SE6a_PIN, kPORT_MuxAlt3);
+
     /* PORTE25 (pin 32) is configured as FTM0_CH1 */
     PORT_SetPinMux(BOARD_INITPINS_LED_BLUE_PORT, BOARD_INITPINS_LED_BLUE_PIN, kPORT_MuxAlt3);
+
+    /* PORTE3 (pin 4) is configured as UART1_RTS_b */
+    PORT_SetPinMux(BOARD_INITPINS_ADC1_SE7a_PORT, BOARD_INITPINS_ADC1_SE7a_PIN, kPORT_MuxAlt3);
 
     SIM->SOPT2 = ((SIM->SOPT2 &
                    /* Mask bits to zero which are setting */
