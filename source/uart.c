@@ -59,10 +59,7 @@ void uartRxTask(void *pvParameters) {
 
 		if (!frameStarted) {
 			if (SOH == rxBuffer[0]) {
-				memset(frameBuffer, 0x00, UART_RX_BUFFER_LENGTH);
-				pFrameIndex = frameBuffer;
 				frameStarted = true;
-				bytesReceived = 0;
 			}
 
 			continue;
@@ -72,16 +69,11 @@ void uartRxTask(void *pvParameters) {
 		pFrameIndex++;
 		bytesReceived++;
 
-		uint8_t i;
-		for (i = 0; i < bytesReceived; i++) {
-			printf("0x%2X ", frameBuffer[i]);
-		}
-		printf("\r\n");
-
 		if (frameBuffer[0] == (bytesReceived - 1)) {
-			uint8_t checksum = 0xFF;
+			uint8_t checksum;
+			uint8_t i;
 
-			for (i = 0; i < bytesReceived - 1; i++) {
+			for (i = 0, checksum = 0xFF; i < bytesReceived - 1; i++) {
 				checksum = checksum ^ frameBuffer[i];
 			}
 
@@ -91,6 +83,9 @@ void uartRxTask(void *pvParameters) {
 				printf("failed\r\n");
 			}
 
+			bytesReceived = 0;
+			memset(frameBuffer, 0x00, UART_RX_BUFFER_LENGTH);
+			pFrameIndex = frameBuffer;
 			frameStarted = false;
 		}
 	}
