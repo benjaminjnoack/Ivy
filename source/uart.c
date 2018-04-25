@@ -84,7 +84,6 @@ void uartRxTask(void *pvParameters) {
 			}
 
 			bytesReceived = 0;
-			memset(frameBuffer, 0x00, UART_RX_BUFFER_LENGTH);
 			pFrameIndex = frameBuffer;
 			frameStarted = false;
 		}
@@ -98,7 +97,7 @@ void UART1_RX_TX_IRQHandler(void) {
 	static BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
 	if ((kUART_RxDataRegFullFlag | kUART_RxOverrunFlag) & UART_GetStatusFlags(UART1)) {
-		data[0] = UART_ReadByte(UART1);
+		data[0] = UART1->D;
 		xQueueSendFromISR(xUartRxQueue, data, &xHigherPriorityTaskWoken);
 	}
 }
