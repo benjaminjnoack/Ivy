@@ -11,15 +11,18 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "fsl_clock.h"
+#include "fsl_uart.h"
+#include "fsl_debug_console.h"
+#include "fsl_gpio.h"
+
+#include "pin_mux.h"
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 
-#include "fsl_clock.h"
-#include "fsl_uart.h"
-#include "fsl_debug_console.h"
-
-#define UART_RX_BUFFER_LENGTH 10
+#define UART_RX_BUFFER_LENGTH 100
 
 #define SOH 0x01//Start of Header
 

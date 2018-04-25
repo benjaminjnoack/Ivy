@@ -78,9 +78,9 @@ void uartRxTask(void *pvParameters) {
 			}
 
 			if (checksum == frameBuffer[bytesReceived - 1]) {
-				printf("passed\r\n");
+				//TODO send the frame out to someone who cares
 			} else {
-				printf("failed\r\n");
+				GPIO_PortClear(BOARD_INITPINS_LED_RED_GPIO, 1 << BOARD_INITPINS_LED_RED_GPIO_PIN);
 			}
 
 			bytesReceived = 0;
