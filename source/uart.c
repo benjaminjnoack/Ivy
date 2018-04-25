@@ -10,8 +10,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-uint8_t rxBuffer[UART_RX_BUFFER_LENGTH];
-uint8_t *pRxBuffer;
+
 QueueHandle_t xUartRxQueue;
 xTaskHandle xUartRxTask;
 uart_handle_t uartHandle;
@@ -29,7 +28,6 @@ void uartRxTask(void *pvParameters);
 void uartInitialize(void) {
 	uart_config_t config;
 
-	pRxBuffer = rxBuffer;
 	xUartRxQueue = xQueueCreate(UART_RX_BUFFER_LENGTH, sizeof(uint8_t));
 	UART_GetDefaultConfig(&config);
 	config.enableRx = true;
@@ -48,16 +46,53 @@ void uartInitialize(void) {
 	}
 }
 
-/**
- * TODO
- * assemble them into frames
- * when the frame is complete, reset the buffer pointer
- */
 void uartRxTask(void *pvParameters) {
+	uint8_t rxBuffer[1];
+
+	static uint8_t frameBuffer[UART_RX_BUFFER_LENGTH];
+	static uint8_t *pFrameIndex = frameBuffer;
+	static bool frameStarted = false;
+	static uint8_t bytesReceived = 0;
+
 	for (;;) {
-		xQueueReceive(xUartRxQueue, pRxBuffer, portMAX_DELAY);
-		printf("%d\r\n", *pRxBuffer);
-		pRxBuffer++;//TODO wrap around
+		xQueueReceive(xUartRxQueue, rxBuffer, portMAX_DELAY);
+
+		if (!frameStarted) {
+			if (SOH == rxBuffer[0]) {
+				memset(frameBuffer, 0x00, UART_RX_BUFFER_LENGTH);
+				pFrameIndex = frameBuffer;
+				frameStarted = true;
+				bytesReceived = 0;
+			}
+
+			continue;
+		}
+
+		*pFrameIndex = *rxBuffer;
+		pFrameIndex++;
+		bytesReceived++;
+
+		uint8_t i;
+		for (i = 0; i < bytesReceived; i++) {
+			printf("0x%2X ", frameBuffer[i]);
+		}
+		printf("\r\n");
+
+		if (frameBuffer[0] == (bytesReceived - 1)) {
+			uint8_t checksum = 0xFF;
+
+			for (i = 0; i < bytesReceived - 1; i++) {
+				checksum = checksum ^ frameBuffer[i];
+			}
+
+			if (checksum == frameBuffer[bytesReceived - 1]) {
+				printf("passed\r\n");
+			} else {
+				printf("failed\r\n");
+			}
+
+			frameStarted = false;
+		}
 	}
 
 	vTaskDelete(xUartRxTask);

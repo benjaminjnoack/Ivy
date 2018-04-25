@@ -9,6 +9,8 @@
 #define UART_H_
 
 #include <stdio.h>
+#include <string.h>
+
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
@@ -17,7 +19,9 @@
 #include "fsl_uart.h"
 #include "fsl_debug_console.h"
 
-#define UART_RX_BUFFER_LENGTH 100
+#define UART_RX_BUFFER_LENGTH 10
+
+#define SOH 0x01//Start of Header
 
 /*******************************************************************************
  * Prototypes
