@@ -17,13 +17,12 @@
 #include "fsl_uart.h"
 #include "fsl_debug_console.h"
 
-#define UART_BUFFER_LEN 2
+#define UART_RX_BUFFER_LENGTH 100
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
 void uartInitialize(void);
-void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData);
 
 #endif /* UART_H_ */

@@ -10,13 +10,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+uint8_t rxBuffer[UART_RX_BUFFER_LENGTH];
+uint8_t *pRxBuffer;
+QueueHandle_t xUartRxQueue;
 xTaskHandle xUartRxTask;
-uart_handle_t g_uartHandle;
-SemaphoreHandle_t xUartTxSemphr;
-uart_transfer_t rxTransfer;
-uint8_t rxBuffer[UART_BUFFER_LEN] = {0x00};
-volatile bool rxOnGoing = false;
+uart_handle_t uartHandle;
 
 /*******************************************************************************
  * Prototypes
@@ -29,55 +27,48 @@ void uartRxTask(void *pvParameters);
  ******************************************************************************/
 
 void uartInitialize(void) {
-	status_t status;
 	uart_config_t config;
 
+	pRxBuffer = rxBuffer;
+	xUartRxQueue = xQueueCreate(UART_RX_BUFFER_LENGTH, sizeof(uint8_t));
 	UART_GetDefaultConfig(&config);
 	config.enableRx = true;
-	config.enableTx = true;
-	//TODO enable CTS and RTS
-	status = UART_Init(UART1, &config, CLOCK_GetFreq(kCLOCK_CoreSysClk));
+	config.enableRxRTS = true;
 
-	rxTransfer.data = rxBuffer;
-	rxTransfer.dataSize = UART_BUFFER_LEN;
+	UART_Init(UART1, &config, CLOCK_GetFreq(kCLOCK_CoreSysClk));
 
+	UART_EnableInterrupts(UART1, kUART_RxDataRegFullInterruptEnable | kUART_RxOverrunInterruptEnable);
 	NVIC_SetPriority(UART1_RX_TX_IRQn, 5);
-//	UART_EnableInterrupts(UART1, kUART_RxDataRegFullInterruptEnable);
+	EnableIRQ(UART1_RX_TX_IRQn);
 
-	UART_TransferCreateHandle(UART1, &g_uartHandle, UART_UserCallback, NULL);
-
-	xUartTxSemphr = xSemaphoreCreateBinary();
-//TODO stack size?
-	if (xTaskCreate(uartRxTask, "UART RX", configMINIMAL_STACK_SIZE + 128, NULL, (configMAX_PRIORITIES + 1), &xUartRxTask) != pdPASS)
-	{
-		PRINTF("UART RX creation failed!.\r\n");
+	if (xTaskCreate(uartRxTask, "UART RX", configMINIMAL_STACK_SIZE + 128, NULL, (configMAX_PRIORITIES + 1), &xUartRxTask) != pdPASS) {
+		printf("UART RX creation failed!.\r\n");
 		while (1)
 			;
 	}
 }
 
+/**
+ * TODO
+ * assemble them into frames
+ * when the frame is complete, reset the buffer pointer
+ */
 void uartRxTask(void *pvParameters) {
-	static status_t rxStatus;
-
 	for (;;) {
-		rxStatus = UART_TransferReceiveNonBlocking(UART1, &g_uartHandle, &rxTransfer, NULL);
-//		xSemaphoreTake(xUartTxSemphr, portMAX_DELAY);
-
-		if (!rxOnGoing) {
-			PRINTF("%s\r\n", rxTransfer.data);
-			rxOnGoing = true;
-		}
+		xQueueReceive(xUartRxQueue, pRxBuffer, portMAX_DELAY);
+		printf("%d\r\n", *pRxBuffer);
+		pRxBuffer++;//TODO wrap around
 	}
 
 	vTaskDelete(xUartRxTask);
 }
 
-void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData) {
+void UART1_RX_TX_IRQHandler(void) {
+	static uint8_t data[1];
 	static BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-	if (kStatus_UART_RxIdle == status) {
-		rxOnGoing = false;
-	} else {
-		PRINTF("STAT: %d\n\n", status);
+	if ((kUART_RxDataRegFullFlag | kUART_RxOverrunFlag) & UART_GetStatusFlags(UART1)) {
+		data[0] = UART_ReadByte(UART1);
+		xQueueSendFromISR(xUartRxQueue, data, &xHigherPriorityTaskWoken);
 	}
 }
