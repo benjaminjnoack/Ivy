@@ -69,18 +69,18 @@ void uartRxTask(void *pvParameters) {
 		pFrameIndex++;
 		bytesReceived++;
 
-		if (frameBuffer[0] == (bytesReceived - 1)) {
+		if (bytesReceived == 3) {
 			uint8_t checksum;
 			uint8_t i;
 
-			for (i = 0, checksum = 0xFF; i < bytesReceived - 1; i++) {
+			for (i = 0, checksum = 0xFF; i < 2; i++) {
 				checksum = checksum ^ frameBuffer[i];
 			}
 
 			if (checksum == frameBuffer[bytesReceived - 1]) {
-				//TODO send the frame out to someone who cares
+				printf("OK\r\n");
 			} else {
-				GPIO_PortClear(BOARD_INITPINS_LED_RED_GPIO, 1 << BOARD_INITPINS_LED_RED_GPIO_PIN);
+				GPIO_PortClear(BOARD_INITPINS_LED_GREEN_GPIO, 1 << BOARD_INITPINS_LED_GREEN_GPIO_PIN);
 			}
 
 			bytesReceived = 0;
@@ -88,7 +88,7 @@ void uartRxTask(void *pvParameters) {
 			frameStarted = false;
 		}
 	}
-
+	GPIO_PortClear(BOARD_INITPINS_LED_RED_GPIO, 1 << BOARD_INITPINS_LED_RED_GPIO_PIN);
 	vTaskDelete(xUartRxTask);
 }
 
