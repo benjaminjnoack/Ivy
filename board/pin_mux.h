@@ -146,6 +146,20 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_LED_GREEN_NAME "LED_GREEN"           /*!<@brief Identifier name */
                                                             /* @} */
 
+/*! @name PORTE25 (number 32), D4[3]/LEDRGB_BLUE
+  @{ */
+#define BOARD_INITPINS_LED_BLUE_PERIPHERAL GPIOE          /*!<@brief Device name: GPIOE */
+#define BOARD_INITPINS_LED_BLUE_SIGNAL GPIO               /*!<@brief GPIOE signal: GPIO */
+#define BOARD_INITPINS_LED_BLUE_GPIO GPIOE                /*!<@brief GPIO device name: GPIOE */
+#define BOARD_INITPINS_LED_BLUE_GPIO_PIN 25U              /*!<@brief PORTE pin index: 25 */
+#define BOARD_INITPINS_LED_BLUE_PORT PORTE                /*!<@brief PORT device name: PORTE */
+#define BOARD_INITPINS_LED_BLUE_PIN 25U                   /*!<@brief PORTE pin index: 25 */
+#define BOARD_INITPINS_LED_BLUE_CHANNEL 25                /*!<@brief GPIOE GPIO channel: 25 */
+#define BOARD_INITPINS_LED_BLUE_PIN_NAME PTE25            /*!<@brief Pin name */
+#define BOARD_INITPINS_LED_BLUE_LABEL "D4[3]/LEDRGB_BLUE" /*!<@brief Label */
+#define BOARD_INITPINS_LED_BLUE_NAME "LED_BLUE"           /*!<@brief Identifier name */
+                                                          /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

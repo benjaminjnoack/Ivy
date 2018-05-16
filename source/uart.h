@@ -22,6 +22,8 @@
 #include "task.h"
 #include "semphr.h"
 
+#include "motor.h"
+
 #define UART_RX_BUFFER_LENGTH 100
 
 #define SOH 0x01//Start of Header

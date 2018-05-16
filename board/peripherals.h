@@ -12,6 +12,7 @@
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
+#include "fsl_i2c.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -25,12 +26,29 @@ extern "C" {
 #define GPIO_1_GPIO GPIOD
 /* Alias for GPIOE peripheral */
 #define GPIO_2_GPIO GPIOE
+/* BOARD_InitPeripherals defines for I2C1 */
+/* Definition of peripheral ID */
+#define I2C_1_PERIPHERAL I2C1
+/* Definition of the clock source */
+#define I2C_1_CLKSRC I2C1_CLK_SRC
+/* Transfer buffer size. */
+#define I2C_1_BUFFER_SIZE 4
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
 extern gpio_pin_config_t GPIO_1_config[2];
 extern gpio_pin_config_t GPIO_2_config[1];
+extern const i2c_master_config_t I2C_1_config;
+extern i2c_master_handle_t I2C_1_handle;
+extern uint8_t I2C_1_buffer[I2C_1_BUFFER_SIZE];
+extern i2c_master_transfer_t I2C_1_transfer;
+
+/***********************************************************************************************************************
+ * Callback functions
+ **********************************************************************************************************************/
+/* I2C transfer callback function for the I2C_1 component (init. function BOARD_InitPeripherals)*/
+extern void i2c_master_callback(I2C_Type *base, i2c_master_handle_t *handle, status_t status, void *userData);
 
 /***********************************************************************************************************************
  * Initialization functions

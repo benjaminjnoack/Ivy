@@ -45,9 +45,11 @@ BOARD_InitPins:
   - {pin_num: '2', peripheral: UART1, signal: RX, pin_signal: ADC1_SE5a/PTE1/LLWU_P0/SPI1_SOUT/UART1_RX/I2C1_SCL/SPI1_SIN}
   - {pin_num: '3', peripheral: UART1, signal: CTS, pin_signal: ADC1_SE6a/PTE2/LLWU_P1/SPI1_SCK/UART1_CTS_b}
   - {pin_num: '4', peripheral: UART1, signal: RTS, pin_signal: ADC1_SE7a/PTE3/SPI1_SIN/UART1_RTS_b/SPI1_SOUT}
-  - {pin_num: '32', peripheral: GPIOE, signal: 'GPIO, 25', pin_signal: ADC0_SE18/PTE25/FTM0_CH1/I2C0_SDA/EWM_IN, identifier: ''}
   - {pin_num: '94', peripheral: GPIOD, signal: 'GPIO, 1', pin_signal: ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b/LPUART0_CTS_b}
   - {pin_num: '100', peripheral: GPIOD, signal: 'GPIO, 7', pin_signal: PTD7/UART0_TX/FTM0_CH7/FTM0_FLT1/SPI1_SIN}
+  - {pin_num: '82', peripheral: I2C1, signal: SCL, pin_signal: ADC1_SE6b/PTC10/I2C1_SCL/FTM3_CH6/FB_AD5}
+  - {pin_num: '83', peripheral: I2C1, signal: SDA, pin_signal: ADC1_SE7b/PTC11/LLWU_P11/I2C1_SDA/FTM3_CH7/FB_RW_b}
+  - {pin_num: '32', peripheral: GPIOE, signal: 'GPIO, 25', pin_signal: ADC0_SE18/PTE25/FTM0_CH1/I2C0_SDA/EWM_IN}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -75,6 +77,12 @@ void BOARD_InitPins(void)
     /* PORTB17 (pin 63) is configured as UART0_TX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART_TX_PORT, BOARD_INITPINS_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);
 
+    /* PORTC10 (pin 82) is configured as I2C1_SCL */
+    PORT_SetPinMux(PORTC, 10U, kPORT_MuxAlt2);
+
+    /* PORTC11 (pin 83) is configured as I2C1_SDA */
+    PORT_SetPinMux(PORTC, 11U, kPORT_MuxAlt2);
+
     /* PORTC3 (pin 73) is configured as CLKOUT */
     PORT_SetPinMux(BOARD_INITPINS_CMP1_IN1_PORT, BOARD_INITPINS_CMP1_IN1_PIN, kPORT_MuxAlt5);
 
@@ -94,7 +102,7 @@ void BOARD_InitPins(void)
     PORT_SetPinMux(BOARD_INITPINS_ADC1_SE6a_PORT, BOARD_INITPINS_ADC1_SE6a_PIN, kPORT_MuxAlt3);
 
     /* PORTE25 (pin 32) is configured as PTE25 */
-    PORT_SetPinMux(PORTE, 25U, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_INITPINS_LED_BLUE_PORT, BOARD_INITPINS_LED_BLUE_PIN, kPORT_MuxAsGpio);
 
     /* PORTE3 (pin 4) is configured as UART1_RTS_b */
     PORT_SetPinMux(BOARD_INITPINS_ADC1_SE7a_PORT, BOARD_INITPINS_ADC1_SE7a_PIN, kPORT_MuxAlt3);

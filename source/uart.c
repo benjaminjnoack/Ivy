@@ -47,8 +47,7 @@ void uartInitialize(void) {
 }
 
 void uartRxTask(void *pvParameters) {
-	uint8_t rxBuffer[1];
-
+	static uint8_t rxBuffer[1];
 	static uint8_t frameBuffer[UART_RX_BUFFER_LENGTH];
 	static uint8_t *pFrameIndex = frameBuffer;
 	static bool frameStarted = false;
@@ -67,7 +66,7 @@ void uartRxTask(void *pvParameters) {
 
 		*pFrameIndex = *rxBuffer;
 		pFrameIndex++;
-		bytesReceived++;
+		bytesReceived++;//TODO should be able to calculate this with pointer arithmetic
 
 		if (bytesReceived == 3) {
 			uint8_t checksum;
@@ -78,7 +77,16 @@ void uartRxTask(void *pvParameters) {
 			}
 
 			if (checksum == frameBuffer[bytesReceived - 1]) {
-				printf("OK\r\n");
+				switch (frameBuffer[0]) {
+				case AXIS_PITCH:
+				case AXIS_ROLL:
+				case AXIS_THRUST:
+				case AXIS_YAW:
+					motorSendToQueue(frameBuffer, 0);
+					break;
+				default:
+					GPIO_PortClear(BOARD_INITPINS_LED_BLUE_GPIO, 1 << BOARD_INITPINS_LED_BLUE_GPIO_PIN);
+				}
 			} else {
 				GPIO_PortClear(BOARD_INITPINS_LED_GREEN_GPIO, 1 << BOARD_INITPINS_LED_GREEN_GPIO_PIN);
 			}

@@ -126,6 +126,64 @@ void GPIO_2_init(void) {
 }
 
 /***********************************************************************************************************************
+ * I2C_1 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'I2C_1'
+- type: 'i2c'
+- mode: 'I2C_Transfer'
+- type_id: 'i2c_2566d7363e7e9aaedabb432110e372d7'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'I2C1'
+- config_sets:
+  - transferCfg:
+    - transfer:
+      - init_transfer: 'true'
+      - master_transfer_cfg:
+        - flags: 'kI2C_TransferDefaultFlag'
+        - slaveAddress: '64'
+        - direction: 'kI2C_Write'
+        - subaddress: '0'
+        - subaddressSize: '0'
+        - dataSize: '4'
+      - init_callback: 'true'
+      - callback_fcn: 'i2c_master_callback'
+      - user_data: ''
+  - fsl_i2c:
+    - i2c_mode: 'kI2C_Master'
+    - i2c_master_config:
+      - enableMaster: 'true'
+      - enableStopHold: 'false'
+      - baudRate_Bps: '400000'
+      - glitchFilterWidth: '0'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const i2c_master_config_t I2C_1_config = {
+  .enableMaster = true,
+  .enableStopHold = false,
+  .baudRate_Bps = 400000,
+  .glitchFilterWidth = 0
+};
+i2c_master_handle_t I2C_1_handle;
+uint8_t I2C_1_buffer[I2C_1_BUFFER_SIZE];
+i2c_master_transfer_t I2C_1_transfer;
+
+void I2C_1_init(void) {
+  /* Initialization function */
+  I2C_MasterInit(I2C_1_PERIPHERAL, &I2C_1_config, CLOCK_GetFreq(I2C_1_CLKSRC));
+  I2C_1_transfer.slaveAddress = 64;
+  I2C_1_transfer.direction = kI2C_Write;
+  I2C_1_transfer.subaddress = (uint32_t)NULL;
+  I2C_1_transfer.subaddressSize = 0;
+  I2C_1_transfer.data = I2C_1_buffer;
+  I2C_1_transfer.dataSize = I2C_1_BUFFER_SIZE;
+  I2C_1_transfer.flags = kI2C_TransferDefaultFlag;
+  I2C_MasterTransferCreateHandle(I2C_1_PERIPHERAL, &I2C_1_handle, i2c_master_callback, NULL);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
@@ -133,6 +191,7 @@ void BOARD_InitPeripherals(void)
   /* Initialize components */
   GPIO_1_init();
   GPIO_2_init();
+  I2C_1_init();
 }
 
 /***********************************************************************************************************************
