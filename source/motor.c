@@ -38,7 +38,6 @@ void motorTask(void *pvParameters) {
 		case AXIS_PITCH:
 		case AXIS_ROLL:
 		case AXIS_THRUST:
-			//TODO send to PCA
 		case AXIS_YAW:
 			break;
 		}
