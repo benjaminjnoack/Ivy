@@ -50,5 +50,10 @@
 			<type>1</type>
 			<locationURI>SDK_2_x_FRDM_KV31F/rtos/freertos/Source/readme.txt</locationURI>
 		</link>
+		<link>
+			<name>doc/amazon-freertos/FreeRTOS/portable/readme.txt</name>
+			<type>1</type>
+			<locationURI>SDK_2_x_FRDM_KV31F/rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
