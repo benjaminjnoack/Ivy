@@ -31,18 +31,31 @@ void motorInitialize(void) {
 void motorTask(void *pvParameters) {
 	static uint8_t command[MOTOR_COMM_SIZE];
 
+	static motor_command_t motor1 = {.motor = MOTOR_ONE, .power = 0x00};
+	static motor_command_t motor2 = {.motor = MOTOR_TWO, .power = 0x00};
+	static motor_command_t motor3 = {.motor = MOTOR_THREE, .power = 0x00};
+	static motor_command_t motor4 = {.motor = MOTOR_FOUR, .power = 0x00};
+
 	for (;;) {
 		xQueueReceive(xMotorQueue, &command, portMAX_DELAY);
 
 		switch (command[0]) {
 		case AXIS_PITCH:
 		case AXIS_ROLL:
-		case AXIS_THRUST:
 		case AXIS_YAW:
 			break;
-		}
+		case AXIS_THRUST:
+			motor1.power = command[1];
+			motor2.power = command[1];
+			motor3.power = command[1];
+			motor4.power = command[1];
 
-		//TODO call xQueuePeekFromISR to see if the stop signal should be sent
+			receiveMotorCommand(&motor1, 0);
+			receiveMotorCommand(&motor2, 0);
+			receiveMotorCommand(&motor3, 0);
+			receiveMotorCommand(&motor4, 0);
+			break;
+		}
 	}
 }
 

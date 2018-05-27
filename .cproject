@@ -600,10 +600,7 @@
 		<projectStorage>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;TargetConfig&gt;
 &lt;Properties property_3="NXP" property_4="MKV31F512xxx12" property_count="5" version="100200"/&gt;
-&lt;infoList vendor="NXP"&gt;
-&lt;info chip="MKV31F512xxx12" name="MKV31F512xxx12"&gt;
-&lt;chip&gt;
-&lt;name&gt;MKV31F512xxx12&lt;/name&gt;
+&lt;infoList vendor="NXP"&gt;&lt;info chip="MKV31F512xxx12" name="MKV31F512xxx12"&gt;&lt;chip&gt;&lt;name&gt;MKV31F512xxx12&lt;/name&gt;
 &lt;family&gt;KV3x&lt;/family&gt;
 &lt;vendor&gt;NXP&lt;/vendor&gt;
 &lt;memory can_program="true" id="Flash" is_ro="true" size="512" type="Flash"/&gt;
@@ -666,8 +663,7 @@
 &lt;peripheralInstance derived_from="NVIC" determined="infoFile" id="NVIC" location="0xE000E100"/&gt;
 &lt;peripheralInstance derived_from="MCM" determined="infoFile" id="MCM" location="0xE0080000"/&gt;
 &lt;/chip&gt;
-&lt;processor&gt;
-&lt;name gcc_name="cortex-m4"&gt;Cortex-M4&lt;/name&gt;
+&lt;processor&gt;&lt;name gcc_name="cortex-m4"&gt;Cortex-M4&lt;/name&gt;
 &lt;family&gt;Cortex-M&lt;/family&gt;
 &lt;/processor&gt;
 &lt;link href="MKV31F51212_internal_peripheral.xml" show="embed" type="simple"/&gt;
@@ -677,7 +673,7 @@
 	</storageModule>
 	<storageModule moduleId="com.nxp.mcuxpresso.core.datamodels">
 		<sdkName>SDK_2.x_FRDM-KV31F</sdkName>
-		<sdkVersion>2.4.0</sdkVersion>
+		<sdkVersion>2.3.1</sdkVersion>
 		<sdkComponents>middleware.freertos.MKV31F51212;platform.drivers.clock.MKV31F51212;platform.Include_common.MKV31F51212;platform.Include_core_cm4.MKV31F51212;platform.devices.MKV31F51212_CMSIS.MKV31F51212;platform.drivers.common.MKV31F51212;platform.drivers.flash.MKV31F51212;platform.drivers.gpio.MKV31F51212;platform.drivers.lpuart.MKV31F51212;platform.drivers.port.MKV31F51212;platform.drivers.smc.MKV31F51212;platform.drivers.uart.MKV31F51212;platform.drivers.adc16.MKV31F51212;platform.drivers.i2c.MKV31F51212;platform.drivers.ftm.MKV31F51212;platform.drivers.flexbus.MKV31F51212;platform.drivers.pit.MKV31F51212;platform.drivers.pdb.MKV31F51212;platform.drivers.sim.MKV31F51212;platform.drivers.uart_edma.MKV31F51212;platform.drivers.dmamux.MKV31F51212;platform.drivers.edma.MKV31F51212;platform.drivers.uart_freertos.MKV31F51212;platform.utilities.debug_console.MKV31F51212;middleware.dma_manager.MKV31F51212;platform.devices.MKV31F51212_startup.MKV31F51212;project_template.frdmkv31f.MKV31F51212;middleware.template_application.freertos.MKV31F51212;</sdkComponents>
 		<boardId>frdmkv31f</boardId>
 		<package>MKV31F512VLL12</package>

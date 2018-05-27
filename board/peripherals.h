@@ -16,7 +16,7 @@
 
 #if defined(__cplusplus)
 extern "C" {
-#endif /* __cplusplus*/
+#endif /* __cplusplus */
 
 /***********************************************************************************************************************
  * Definitions
@@ -30,9 +30,11 @@ extern "C" {
 /* Definition of peripheral ID */
 #define I2C_1_PERIPHERAL I2C1
 /* Definition of the clock source */
-#define I2C_1_CLKSRC I2C1_CLK_SRC
+#define I2C_1_CLOCK_SOURCE I2C1_CLK_SRC
+/* Definition of the clock source frequency */
+#define I2C_1_CLK_FREQ CLOCK_GetFreq(I2C_1_CLOCK_SOURCE)
 /* Transfer buffer size. */
-#define I2C_1_BUFFER_SIZE 4
+#define I2C_1_BUFFER_SIZE 5
 
 /***********************************************************************************************************************
  * Global variables

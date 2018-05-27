@@ -6,11 +6,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v1.0
+product: Peripherals v4.1
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 3.0.1
+processor_version: 4.0.0
 board: FRDM-KV31F
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -147,12 +147,14 @@ instance:
         - direction: 'kI2C_Write'
         - subaddress: '0'
         - subaddressSize: '0'
-        - dataSize: '4'
+        - dataSize: '5'
       - init_callback: 'true'
       - callback_fcn: 'i2c_master_callback'
       - user_data: ''
   - fsl_i2c:
     - i2c_mode: 'kI2C_Master'
+    - clockSource: 'BusInterfaceClock'
+    - clockSourceFreq: 'GetFreq'
     - i2c_master_config:
       - enableMaster: 'true'
       - enableStopHold: 'false'
@@ -172,7 +174,7 @@ i2c_master_transfer_t I2C_1_transfer;
 
 void I2C_1_init(void) {
   /* Initialization function */
-  I2C_MasterInit(I2C_1_PERIPHERAL, &I2C_1_config, CLOCK_GetFreq(I2C_1_CLKSRC));
+  I2C_MasterInit(I2C_1_PERIPHERAL, &I2C_1_config, I2C_1_CLK_FREQ);
   I2C_1_transfer.slaveAddress = 64;
   I2C_1_transfer.direction = kI2C_Write;
   I2C_1_transfer.subaddress = (uint32_t)NULL;

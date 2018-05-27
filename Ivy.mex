@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MKV31F512xxx12" version="1.3" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.3 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.3.xsd" uuid="8be49fa7-fe92-48f5-9c04-9ae43f516756" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MKV31F512xxx12" version="1.4" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4.xsd" uuid="8be49fa7-fe92-48f5-9c04-9ae43f516756" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MKV31F512xxx12</processor>
       <package>MKV31F512VLL12</package>
@@ -12,11 +12,12 @@
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_extended_information>true</generate_extended_information>
    </preferences>
    <tools>
-      <pins name="Pins" version="4.0" update_project_code="true">
+      <pins name="Pins" version="4.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>3.0.1</processor_version>
+            <processor_version>4.0.0</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -27,42 +28,32 @@
                   <enableClock>true</enableClock>
                </options>
                <dependencies>
-                  <dependency resourceType="Peripheral" resourceId="I2C1" description="Peripheral I2C1 is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
+                  <dependency resourceType="Peripheral" resourceId="UART0" description="Peripheral UART0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="GPIOD" description="Peripheral GPIOD is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
+                  <dependency resourceType="Peripheral" resourceId="FB" description="Peripheral FB is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="GPIOE" description="Peripheral GPIOE is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
+                  <dependency resourceType="Peripheral" resourceId="UART1" description="Peripheral UART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="FB" description="Peripheral FB is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
+                  <dependency resourceType="Peripheral" resourceId="I2C1" description="Peripheral I2C1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="UART0" description="Peripheral UART0 is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="Peripheral" resourceId="UART1" description="Peripheral UART1 is not initialized" problem_level="1" source="Pins: BOARD_InitPins">
-                     <feature name="initialized" evaluation="">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins.BOARD_InitPins">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins.BOARD_InitPins">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
@@ -85,31 +76,31 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="4.0" update_project_code="true">
+      <clocks name="Clocks" version="4.1" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>3.0.1</processor_version>
+            <processor_version>4.0.0</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockHSRUN">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks: BOARD_BootClockHSRUN">
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
                      <feature name="routed" evaluation="">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks: BOARD_BootClockHSRUN">
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
                      <feature name="routed" evaluation="">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks.BOARD_BootClockHSRUN">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks.BOARD_BootClockHSRUN">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
@@ -162,12 +153,12 @@
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks.BOARD_BootClockVLPR">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockVLPR">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks.BOARD_BootClockVLPR">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockVLPR">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
@@ -208,17 +199,17 @@
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks: BOARD_BootClockRUN">
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
                      <feature name="routed" evaluation="">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks: BOARD_BootClockRUN">
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
                      <feature name="routed" evaluation="">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks.BOARD_BootClockRUN">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
@@ -266,7 +257,7 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <periphs name="Peripherals" version="1.0" update_project_code="true">
+      <periphs name="Peripherals" version="4.1" enabled="true" update_project_code="true">
          <dependencies>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="GPIO Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
@@ -290,51 +281,56 @@
             </dependency>
          </dependencies>
          <peripherals_profile>
-            <processor_version>3.0.1</processor_version>
+            <processor_version>4.0.0</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" called_from_default_init="true" id_prefix="" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="490a0b0d-99c2-4a5c-b84b-2c8ac46b9786" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.1" description="Signal channel 1 of the peripheral GPIOD is not routed." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.1" description="Signal channel 1 of the peripheral GPIOD is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.1" description="Direction of channel 1 of peripheral GPIOD does not match with direction in pins tool." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.1" description="Direction of channel 1 of peripheral GPIOD does not match with direction in pins tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="direction" evaluation="equal">
                         <data type="String">OUTPUT</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.7" description="Signal channel 7 of the peripheral GPIOD is not routed." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.7" description="Signal channel 7 of the peripheral GPIOD is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.7" description="Direction of channel 7 of peripheral GPIOD does not match with direction in pins tool." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOD.port.7" description="Direction of channel 7 of peripheral GPIOD does not match with direction in pins tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="direction" evaluation="equal">
                         <data type="String">OUTPUT</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOE.port.25" description="Signal channel 25 of the peripheral GPIOE is not routed." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOE.port.25" description="Signal channel 25 of the peripheral GPIOE is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOE.port.25" description="Direction of channel 25 of peripheral GPIOE does not match with direction in pins tool." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="GPIOE.port.25" description="Direction of channel 25 of peripheral GPIOE does not match with direction in pins tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="direction" evaluation="equal">
                         <data type="String">OUTPUT</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_scl" description="Signal serial clock of the peripheral I2C1 is not routed." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_scl" description="Signal serial clock of the peripheral I2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_sda" description="Signal serial data of the peripheral I2C1 is not routed." problem_level="1" source="Peripherals: BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C1.i2c_sda" description="Signal serial data of the peripheral I2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
                </dependencies>
@@ -391,7 +387,7 @@
                               <setting name="direction" value="kI2C_Write"/>
                               <setting name="subaddress" value="0"/>
                               <setting name="subaddressSize" value="0"/>
-                              <setting name="dataSize" value="4"/>
+                              <setting name="dataSize" value="5"/>
                            </struct>
                            <setting name="init_callback" value="true"/>
                            <setting name="callback_fcn" value="i2c_master_callback"/>
@@ -400,6 +396,8 @@
                      </config_set>
                      <config_set name="fsl_i2c">
                         <setting name="i2c_mode" value="kI2C_Master"/>
+                        <setting name="clockSource" value="BusInterfaceClock"/>
+                        <setting name="clockSourceFreq" value="GetFreq"/>
                         <struct name="i2c_master_config">
                            <setting name="enableMaster" value="true"/>
                            <setting name="enableStopHold" value="false"/>

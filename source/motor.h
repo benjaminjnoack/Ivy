@@ -22,6 +22,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "pca9685.h"
 
 #define MOTOR_COMM_SIZE 0x02
 
@@ -33,10 +34,10 @@ typedef enum {
 } axis_cmd_t;
 
 typedef enum {
-	FRONT_LEFT = 0,
-	FRONT_RIGHT = 1,
-	BACK_LEFT = 2,
-	BACK_RIGHT = 3
+	MOTOR_ONE,
+	MOTOR_TWO,
+	MOTOR_THREE,
+	MOTOR_FOUR
 } motor_t;
 
 typedef struct motor_command {
@@ -47,5 +48,6 @@ typedef struct motor_command {
 void motorInitialize(void);
 
 portBASE_TYPE motorSendToQueue(uint8_t *buf, TickType_t n);
+portBASE_TYPE receiveMotorCommand(motor_command_t *command, TickType_t n);
 
 #endif /* MOTOR_H_ */
