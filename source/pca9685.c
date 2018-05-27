@@ -18,7 +18,8 @@ void pca9685Initialize(void) {
 	uint8_t resetBuf[] = {SWRST_ADDRESS};
 	uint8_t configBuf[] = {
 			MODE1_ADDRESS,
-			(MODE1_ALLCALL | MODE1_AI)
+			(MODE1_ALLCALL | MODE1_AI),
+			(MODE2_OUTDRV | MODE2_OCH)
 	};
 	uint8_t initBuf[] = {
 			//LED2_ON_L_ADDRESS
@@ -57,7 +58,7 @@ void pca9685Initialize(void) {
 			0x00,
 			0x00,
 			0x00,
-			0x01,
+			FULL_OFF,
 			//LED 9
 			0x00,
 			FULL_ON,

@@ -52,6 +52,9 @@
 #define MODE1_ALLCALL 1 << 0
 #define MODE1_AI 1 << 5
 
+#define MODE2_OUTDRV 1 << 2
+#define MODE2_OCH 1 << 3
+
 /**
  * The same bit written to different registers means either full on or full off
  */
