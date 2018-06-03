@@ -5,8 +5,8 @@
  *      Author: ben
  */
 
-#ifndef PCA9685_H_
-#define PCA9685_H_
+#ifndef ADAFRUIT_MOTOR_H_
+#define ADAFRUIT_MOTOR_H_
 
 /**
  * TODO
@@ -61,6 +61,6 @@
 #define FULL_OFF 1 << 4
 #define FULL_ON 1 << 4
 
-void pca9685Initialize(void);
+void adafruitMotorInitialize(void);
 
-#endif /* PCA9685_H_ */
+#endif /* ADAFRUIT_MOTOR_H_ */

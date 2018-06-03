@@ -18,11 +18,11 @@
  * Outputs:
  *  Motor Control Commands
  */
+#include <adafruit_motor.h>
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-#include "pca9685.h"
 
 #define MOTOR_COMM_SIZE 0x02
 

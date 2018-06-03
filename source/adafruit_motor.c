@@ -5,14 +5,14 @@
  *      Author: ben
  */
 
-#include "pca9685.h"
+#include <adafruit_motor.h>
 
 QueueHandle_t pca9685Queue;
 static TaskHandle_t pca9685TaskHandle;
 
-void pca9685Task(void *pvParameters);
+void adafruitMotorTask(void *pvParameters);
 
-void pca9685Initialize(void) {
+void adafruitMotorInitialize(void) {
 	BaseType_t xReturn;
 	uint16_t xTaskDepth;
 	uint8_t resetBuf[] = {SWRST_ADDRESS};
@@ -105,7 +105,7 @@ void pca9685Initialize(void) {
 	I2C_1_transfer.dataSize = sizeof(initBuf);
 	I2C_MasterTransferBlocking(I2C1, &I2C_1_transfer);
 
-	xReturn = xTaskCreate(pca9685Task, "PCA 9685 RX", xTaskDepth, NULL, (configMAX_PRIORITIES + 2), &pca9685TaskHandle);
+	xReturn = xTaskCreate(adafruitMotorTask, "PCA 9685 RX", xTaskDepth, NULL, (configMAX_PRIORITIES + 2), &pca9685TaskHandle);
 
 	if (xReturn != pdPASS) {
 		printf("PCA RX Task Creation Failed");
@@ -117,7 +117,7 @@ void pca9685Initialize(void) {
 }
 
 
-void pca9685Task(void *pvParameters) {
+void adafruitMotorTask(void *pvParameters) {
 	static motor_command_t command;
 	static uint8_t txBuffer[I2C_1_BUFFER_SIZE] = {0x00};
 
