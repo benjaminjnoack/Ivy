@@ -24,6 +24,7 @@
 #include "task.h"
 #include "queue.h"
 
+#define LEVEL 0x80
 #define MOTOR_COMM_SIZE 0x02
 
 typedef enum {
