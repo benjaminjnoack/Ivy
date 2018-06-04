@@ -8,33 +8,6 @@
 #ifndef ADAFRUIT_MOTOR_H_
 #define ADAFRUIT_MOTOR_H_
 
-/**
- * TODO
- * Motors can be updated one by one, or on the STOP command
- * External clock (useful?) currently grounded, needs software and hardware
- * Defaults to change on stop and no sequential increment
- *
- * Mapping of TB6612 to PCA9685 signals
- * Motor 3 CCW: A02
- * 	PWMA - PWM2 0
- * 	AIN2 - PWM3 high
- * 	AIN1 - PWM4 low
- *
- * Motor 4 CW: A01
- * 	BIN1 - PWM5 high
- * 	BIN2 - PWM6 low
- * 	PWMB - PWM7 0
- *
- * Motor 1 CCW: A02
- * 	PWMA - PWM8 0
- * 	AIN2 - PWM9 high
- * 	AIN1 - PWM10 low
- *
- * Motor 2 CW: A01
- * 	BIN1 - PWM11 high
- * 	BIN2 - PWM12 low
- * 	PWMB - PWM13 0
- */
 #include "string.h"
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
