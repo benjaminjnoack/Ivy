@@ -98,13 +98,13 @@ void motorCalculatePower() {
 	}
 
 	if (yaw > LEVEL) {//CW
-		m1 += (yaw - LEVEL);
-		m2 -= (yaw - LEVEL);
+		m1 -= (yaw - LEVEL);
+		m2 += (yaw - LEVEL);
 		m3 -= (yaw - LEVEL);
 		m4 += (yaw - LEVEL);
 	} else if (yaw < LEVEL) {//CCW
-		m1 -= yaw;
-		m2 += yaw;
+		m1 += yaw;
+		m2 -= yaw;
 		m3 += yaw;
 		m4 -= yaw;
 	}
@@ -133,10 +133,10 @@ void motorCalculatePower() {
 		m4 = 0x00;
 	}
 
-	motor1.power = m1;
-	motor2.power = m2;
-	motor3.power = m3;
-	motor4.power = m4;
+	motor1.power = (uint8_t) m1;
+	motor2.power = (uint8_t) m2;
+	motor3.power = (uint8_t) m3;
+	motor4.power = (uint8_t) m4;
 }
 
 portBASE_TYPE motorSendToQueue(uint8_t *buf, TickType_t n) {
