@@ -24,10 +24,10 @@ void motorInitialize(void) {
 	BaseType_t xReturn;
 	uint16_t xTaskDepth;
 
-	pitch = (MIN_POWER | HALF_DYNAMIC_RANGE);
-	roll = (MIN_POWER | HALF_DYNAMIC_RANGE);
-	thrust = (MIN_POWER | HALF_DYNAMIC_RANGE);
-	yaw = (MIN_POWER | HALF_DYNAMIC_RANGE);
+	pitch = MIN_POWER;
+	roll = MIN_POWER;
+	thrust = MIN_POWER;
+	yaw = MIN_POWER;
 
 	xTaskDepth = configMINIMAL_STACK_SIZE + 128;
 
@@ -85,10 +85,10 @@ void motorCalculatePower() {
 		m2 -= (pitch - HALF_DYNAMIC_RANGE);
 		m3 -= (pitch - HALF_DYNAMIC_RANGE);
 	} else {
-		m1 -= pitch;
-		m4 -= pitch;
-		m2 += pitch;
-		m3 += pitch;
+		m1 -= (HALF_DYNAMIC_RANGE - pitch);
+		m4 -= (HALF_DYNAMIC_RANGE - pitch);
+		m2 += (HALF_DYNAMIC_RANGE - pitch);
+		m3 += (HALF_DYNAMIC_RANGE - pitch);
 	}
 
 	if (roll > HALF_DYNAMIC_RANGE) {
@@ -97,10 +97,10 @@ void motorCalculatePower() {
 		m3 -= (roll - HALF_DYNAMIC_RANGE);
 		m4 -= (roll - HALF_DYNAMIC_RANGE);
 	} else {
-		m1 -= roll;
-		m2 -= roll;
-		m3 += roll;
-		m4 += roll;
+		m1 -= (HALF_DYNAMIC_RANGE - roll);
+		m2 -= (HALF_DYNAMIC_RANGE - roll);
+		m3 += (HALF_DYNAMIC_RANGE - roll);
+		m4 += (HALF_DYNAMIC_RANGE - roll);
 	}
 
 	if (yaw > HALF_DYNAMIC_RANGE) {//CW
@@ -109,26 +109,34 @@ void motorCalculatePower() {
 		m3 -= (yaw - HALF_DYNAMIC_RANGE);
 		m4 += (yaw - HALF_DYNAMIC_RANGE);
 	} else {//CCW
-		m1 += yaw;
-		m2 -= yaw;
-		m3 += yaw;
-		m4 -= yaw;
+		m1 += (HALF_DYNAMIC_RANGE - yaw);
+		m2 -= (HALF_DYNAMIC_RANGE - yaw);
+		m3 += (HALF_DYNAMIC_RANGE - yaw);
+		m4 -= (HALF_DYNAMIC_RANGE - yaw);
 	}
 	//TODO use saturation math to prevent this check
 	if (m1 > 0xFF) {
 		m1 = 0xFF;
+	} else if (m1 < 0x00) {
+		m1 = 0x00;
 	}
 
 	if (m2 > 0xFF) {
 		m2 = 0xFF;
+	} else if (m2 < 0x00) {
+		m2 = 0x00;
 	}
 
 	if (m3 > 0xFF) {
 		m3 = 0xFF;
+	} else if (m3 < 0x00) {
+		m3 = 0x00;
 	}
 
 	if (m4 > 0xFF) {
 		m4 = 0xFF;
+	} else if (m4 < 0x00) {
+		m4 = 0x00;
 	}
 
 	/**

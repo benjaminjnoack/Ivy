@@ -24,7 +24,7 @@
 #include "task.h"
 #include "queue.h"
 
-#define HALF_DYNAMIC_RANGE 0x40
+#define HALF_DYNAMIC_RANGE 0x80
 #define MIN_POWER 0x80
 #define MOTOR_COMM_SIZE 0x02
 
