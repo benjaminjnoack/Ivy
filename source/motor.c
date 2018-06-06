@@ -15,7 +15,7 @@ static motor_command_t motor2 = {.motor = MOTOR_TWO, .power = 0x00};
 static motor_command_t motor3 = {.motor = MOTOR_THREE, .power = 0x00};
 static motor_command_t motor4 = {.motor = MOTOR_FOUR, .power = 0x00};
 
-int pitch, roll, thrust, yaw = LEVEL;
+int pitch, roll, thrust, yaw;
 
 void motorCalculatePower();
 void motorTask(void *pvParameters);
@@ -23,6 +23,11 @@ void motorTask(void *pvParameters);
 void motorInitialize(void) {
 	BaseType_t xReturn;
 	uint16_t xTaskDepth;
+
+	pitch = (MIN_POWER | HALF_DYNAMIC_RANGE);
+	roll = (MIN_POWER | HALF_DYNAMIC_RANGE);
+	thrust = (MIN_POWER | HALF_DYNAMIC_RANGE);
+	yaw = (MIN_POWER | HALF_DYNAMIC_RANGE);
 
 	xTaskDepth = configMINIMAL_STACK_SIZE + 128;
 
@@ -48,6 +53,7 @@ void motorTask(void *pvParameters) {
 			break;
 		case AXIS_ROLL:
 			roll = command[1];
+			break;
 		case AXIS_THRUST:
 			thrust = command[1];
 			break;
@@ -73,36 +79,36 @@ void motorCalculatePower() {
 	m3 = thrust;
 	m4 = thrust;
 
-	if (pitch > LEVEL) {
-		m1 += (pitch - LEVEL);
-		m4 += (pitch - LEVEL);
-		m2 -= (pitch - LEVEL);
-		m3 -= (pitch - LEVEL);
-	} else if (pitch < LEVEL) {
+	if (pitch > HALF_DYNAMIC_RANGE) {
+		m1 += (pitch - HALF_DYNAMIC_RANGE);
+		m4 += (pitch - HALF_DYNAMIC_RANGE);
+		m2 -= (pitch - HALF_DYNAMIC_RANGE);
+		m3 -= (pitch - HALF_DYNAMIC_RANGE);
+	} else {
 		m1 -= pitch;
 		m4 -= pitch;
 		m2 += pitch;
 		m3 += pitch;
 	}
 
-	if (roll > LEVEL) {
-		m1 += (roll - LEVEL);
-		m2 += (roll - LEVEL);
-		m3 -= (roll - LEVEL);
-		m4 -= (roll - LEVEL);
-	} else if (roll < LEVEL) {
+	if (roll > HALF_DYNAMIC_RANGE) {
+		m1 += (roll - HALF_DYNAMIC_RANGE);
+		m2 += (roll - HALF_DYNAMIC_RANGE);
+		m3 -= (roll - HALF_DYNAMIC_RANGE);
+		m4 -= (roll - HALF_DYNAMIC_RANGE);
+	} else {
 		m1 -= roll;
 		m2 -= roll;
 		m3 += roll;
 		m4 += roll;
 	}
 
-	if (yaw > LEVEL) {//CW
-		m1 -= (yaw - LEVEL);
-		m2 += (yaw - LEVEL);
-		m3 -= (yaw - LEVEL);
-		m4 += (yaw - LEVEL);
-	} else if (yaw < LEVEL) {//CCW
+	if (yaw > HALF_DYNAMIC_RANGE) {//CW
+		m1 -= (yaw - HALF_DYNAMIC_RANGE);
+		m2 += (yaw - HALF_DYNAMIC_RANGE);
+		m3 -= (yaw - HALF_DYNAMIC_RANGE);
+		m4 += (yaw - HALF_DYNAMIC_RANGE);
+	} else {//CCW
 		m1 += yaw;
 		m2 -= yaw;
 		m3 += yaw;
@@ -111,27 +117,29 @@ void motorCalculatePower() {
 	//TODO use saturation math to prevent this check
 	if (m1 > 0xFF) {
 		m1 = 0xFF;
-	} else if (m1 < 0) {
-		m1 = 0x00;
 	}
 
 	if (m2 > 0xFF) {
 		m2 = 0xFF;
-	} else if (m2 < 0) {
-		m2 = 0x00;
 	}
 
 	if (m3 > 0xFF) {
 		m3 = 0xFF;
-	} else if (m3 < 0) {
-		m3 = 0x00;
 	}
 
 	if (m4 > 0xFF) {
 		m4 = 0xFF;
-	} else if (m4 < 0) {
-		m4 = 0x00;
 	}
+
+	/**
+	 * Shift over one to axe the LSB
+	 * then ensure the MSB is set
+	 * Makes the dynamic range 0x80 to 0xFF
+	 */
+	m1 = (m1 >> 1) | MIN_POWER;
+	m2 = (m2 >> 1) | MIN_POWER;
+	m3 = (m3 >> 1) | MIN_POWER;
+	m4 = (m4 >> 1) | MIN_POWER;
 
 	motor1.power = (uint8_t) m1;
 	motor2.power = (uint8_t) m2;
