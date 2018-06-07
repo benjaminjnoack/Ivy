@@ -7,12 +7,11 @@
 #include "board.h"
 #include "peripherals.h"
 #include "pin_mux.h"
-#include "clock_config.h"
-#include "MKV31F51212.h"
 #include "uart.h"
 #include "motor.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "fsl_gpio.h"
 /*
  * @brief   Application entry point.
  */
@@ -25,7 +24,7 @@ int main(void) {
 	adafruitMotorInitialize();
 	motorInitialize();
 	uartInitialize();
-	printf("Initialization Complete\r\n");
+	GPIO_ClearPinsOutput(BOARD_INITPINS_LED_GREEN_GPIO, 1 << BOARD_INITPINS_LED_GREEN_GPIO_PIN);
 
 	vTaskStartScheduler();
 
