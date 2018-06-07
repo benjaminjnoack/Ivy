@@ -115,25 +115,25 @@ void motorCalculatePower() {
 		m4 -= (HALF_DYNAMIC_RANGE - yaw);
 	}
 	//TODO use saturation math to prevent this check
-	if (m1 > 0xFF) {
+	if (m1 > 0xF0) {
 		m1 = 0xFF;
 	} else if (m1 < 0x00) {
 		m1 = 0x00;
 	}
 
-	if (m2 > 0xFF) {
+	if (m2 > 0xF0) {
 		m2 = 0xFF;
 	} else if (m2 < 0x00) {
 		m2 = 0x00;
 	}
 
-	if (m3 > 0xFF) {
+	if (m3 > 0xF0) {
 		m3 = 0xFF;
 	} else if (m3 < 0x00) {
 		m3 = 0x00;
 	}
 
-	if (m4 > 0xFF) {
+	if (m4 > 0xF0) {
 		m4 = 0xFF;
 	} else if (m4 < 0x00) {
 		m4 = 0x00;

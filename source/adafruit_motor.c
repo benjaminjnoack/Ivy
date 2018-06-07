@@ -1,5 +1,5 @@
 /*
- * pca9685.c
+ * adafruit_motor.c
  *
  *  Created on: May 7, 2018
  *      Author: ben
