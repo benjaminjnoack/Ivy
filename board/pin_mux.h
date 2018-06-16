@@ -166,6 +166,52 @@ void BOARD_InitBootPins(void);
  */
 void BOARD_InitPins(void);
 
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void I2C1_InitPins(void);
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void I2C1_DeinitPins(void);
+
+/*! @name PORTB1 (number 54), J2[18]/ADC0_SE9/I2C0_SDA
+  @{ */
+#define I2C0_INITPINS_ADC0_SE9_PERIPHERAL I2C0                  /*!<@brief Device name: I2C0 */
+#define I2C0_INITPINS_ADC0_SE9_SIGNAL SDA                       /*!<@brief I2C0 signal: SDA */
+#define I2C0_INITPINS_ADC0_SE9_PORT PORTB                       /*!<@brief PORT device name: PORTB */
+#define I2C0_INITPINS_ADC0_SE9_PIN 1U                           /*!<@brief PORTB pin index: 1 */
+#define I2C0_INITPINS_ADC0_SE9_PIN_NAME I2C0_SDA                /*!<@brief Pin name */
+#define I2C0_INITPINS_ADC0_SE9_LABEL "J2[18]/ADC0_SE9/I2C0_SDA" /*!<@brief Label */
+#define I2C0_INITPINS_ADC0_SE9_NAME "ADC0_SE9"                  /*!<@brief Identifier name */
+                                                                /* @} */
+
+/*! @name PORTB2 (number 55), J2[20]/ADC0_SE12/I2C0_SCL
+  @{ */
+#define I2C0_INITPINS_ADC0_SE12_PERIPHERAL I2C0                   /*!<@brief Device name: I2C0 */
+#define I2C0_INITPINS_ADC0_SE12_SIGNAL SCL                        /*!<@brief I2C0 signal: SCL */
+#define I2C0_INITPINS_ADC0_SE12_PORT PORTB                        /*!<@brief PORT device name: PORTB */
+#define I2C0_INITPINS_ADC0_SE12_PIN 2U                            /*!<@brief PORTB pin index: 2 */
+#define I2C0_INITPINS_ADC0_SE12_PIN_NAME I2C0_SCL                 /*!<@brief Pin name */
+#define I2C0_INITPINS_ADC0_SE12_LABEL "J2[20]/ADC0_SE12/I2C0_SCL" /*!<@brief Label */
+#define I2C0_INITPINS_ADC0_SE12_NAME "ADC0_SE12"                  /*!<@brief Identifier name */
+                                                                  /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void I2C0_InitPins(void);
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void I2C0_DeinitPins(void);
+
 #if defined(__cplusplus)
 }
 #endif

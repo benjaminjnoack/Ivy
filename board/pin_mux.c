@@ -47,8 +47,6 @@ BOARD_InitPins:
   - {pin_num: '4', peripheral: UART1, signal: RTS, pin_signal: ADC1_SE7a/PTE3/SPI1_SIN/UART1_RTS_b/SPI1_SOUT}
   - {pin_num: '94', peripheral: GPIOD, signal: 'GPIO, 1', pin_signal: ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b/LPUART0_CTS_b}
   - {pin_num: '100', peripheral: GPIOD, signal: 'GPIO, 7', pin_signal: PTD7/UART0_TX/FTM0_CH7/FTM0_FLT1/SPI1_SIN}
-  - {pin_num: '82', peripheral: I2C1, signal: SCL, pin_signal: ADC1_SE6b/PTC10/I2C1_SCL/FTM3_CH6/FB_AD5}
-  - {pin_num: '83', peripheral: I2C1, signal: SDA, pin_signal: ADC1_SE7b/PTC11/LLWU_P11/I2C1_SDA/FTM3_CH7/FB_RW_b}
   - {pin_num: '32', peripheral: GPIOE, signal: 'GPIO, 25', pin_signal: ADC0_SE18/PTE25/FTM0_CH1/I2C0_SDA/EWM_IN}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -76,12 +74,6 @@ void BOARD_InitPins(void)
 
     /* PORTB17 (pin 63) is configured as UART0_TX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART_TX_PORT, BOARD_INITPINS_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);
-
-    /* PORTC10 (pin 82) is configured as I2C1_SCL */
-    PORT_SetPinMux(PORTC, 10U, kPORT_MuxAlt2);
-
-    /* PORTC11 (pin 83) is configured as I2C1_SDA */
-    PORT_SetPinMux(PORTC, 11U, kPORT_MuxAlt2);
 
     /* PORTC3 (pin 73) is configured as CLKOUT */
     PORT_SetPinMux(BOARD_INITPINS_CMP1_IN1_PORT, BOARD_INITPINS_CMP1_IN1_PIN, kPORT_MuxAlt5);
@@ -123,6 +115,106 @@ void BOARD_InitPins(void)
 
                   /* UART 1 transmit data source select: UART1_TX pin. */
                   | SIM_SOPT5_UART1TXSRC(SOPT5_UART1TXSRC_UART_TX));
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_InitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '82', peripheral: I2C1, signal: SCL, pin_signal: ADC1_SE6b/PTC10/I2C1_SCL/FTM3_CH6/FB_AD5}
+  - {pin_num: '83', peripheral: I2C1, signal: SDA, pin_signal: ADC1_SE7b/PTC11/LLWU_P11/I2C1_SDA/FTM3_CH7/FB_RW_b}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C1_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C1_InitPins(void)
+{
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+
+    /* PORTC10 (pin 82) is configured as I2C1_SCL */
+    PORT_SetPinMux(PORTC, 10U, kPORT_MuxAlt2);
+
+    /* PORTC11 (pin 83) is configured as I2C1_SDA */
+    PORT_SetPinMux(PORTC, 11U, kPORT_MuxAlt2);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- pin_list: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C1_DeinitPins(void)
+{
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_InitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '54', peripheral: I2C0, signal: SDA, pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM0_FLT2/EWM_IN/FTM1_QD_PHB/UART0_TX}
+  - {pin_num: '55', peripheral: I2C0, signal: SCL, pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT1/FTM0_FLT3}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C0_InitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C0_InitPins(void)
+{
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+
+    /* PORTB1 (pin 54) is configured as I2C0_SDA */
+    PORT_SetPinMux(I2C0_INITPINS_ADC0_SE9_PORT, I2C0_INITPINS_ADC0_SE9_PIN, kPORT_MuxAlt2);
+
+    /* PORTB2 (pin 55) is configured as I2C0_SCL */
+    PORT_SetPinMux(I2C0_INITPINS_ADC0_SE12_PORT, I2C0_INITPINS_ADC0_SE12_PIN, kPORT_MuxAlt2);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- pin_list: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : I2C0_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void I2C0_DeinitPins(void)
+{
 }
 /***********************************************************************************************************************
  * EOF
